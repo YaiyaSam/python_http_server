@@ -67,11 +67,22 @@ class Users(Resource):
         # print(args['id'])
         # return {'data':data}, 200
 
+class Profile(Resource):
+
+    def get(self):
+    
+       cursor = mysql.connection.cursor()  
+       cursor.execute('''SELECT * FROM profile''')
+       result = cursor.fetchall()
+       cursor.close()
+       
+       return result, 200
 
 
 # --------------------link the classes with the endpoints---------------------------
 
 api.add_resource(Users,'/users')
+api.add_resource(Profile, '/profile')
 
 
 
