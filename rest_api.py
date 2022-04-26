@@ -1,28 +1,20 @@
-from flask import Flask
-from flask_restful  import Resource, Api, reqparse
+from flask import Flask, request
+from flask_restful  import Resource, Api
 from flask_mysqldb import MySQL
 import pandas as pd
-import ast
+from urllib.request import urlopen
+import json
 
 app = Flask(__name__)
 api = Api(app)
 
-app.config['db_host'] = 'localhost:3306'
-app.config['db_user'] = 'root'
-app.config['db_password'] = 'Root@1234'
-app.config['db_database'] = "httpServer"
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'Root@1234'
+app.config['MYSQL_DB'] = 'httpServer'
 
 mysql = MySQL(app)
-# cursor = mysql.connection.cursor() 
-
-class Users(Resource):
-    pass
-
-class Profile(Resource):
-    pass
-
-api.add_resource(Users,'/users')
-api.add_resource(Profile, '/profile')
-
+ 
+# ------------------------run the application----------------------------------
 if __name__ == '__main__':
     app.run()
