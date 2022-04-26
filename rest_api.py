@@ -26,6 +26,7 @@ class Users(Resource):
         data = json.loads(response.read())
         return {'data':data}, 200
  
+
     def post(self):
         url = "https://jsonplaceholder.typicode.com/users"
         response = urlopen(url)
@@ -67,6 +68,7 @@ class Users(Resource):
         # print(args['id'])
         # return {'data':data}, 200
 
+
 class Profile(Resource):
 
     def get(self):
@@ -79,11 +81,24 @@ class Profile(Resource):
        return result, 200
 
 
+    def post(self):
+
+        cursor = mysql.connection.cursor()
+        firstName = request.args.get("firstName")
+        lastName = request.args.get("lastName")
+        email = request.args.get("email")
+
+        cursor.execute('''INSERT INTO profile (firstName,lastName,email) VALUES(%s,%s,%s)''',(firstName,lastName,email))
+        mysql.connection.commit()
+        cursor.close()
+
+        return "Profile added!!", 200
+
+
 # --------------------link the classes with the endpoints---------------------------
 
 api.add_resource(Users,'/users')
 api.add_resource(Profile, '/profile')
-
 
 
 # ------------------------run the application----------------------------------
