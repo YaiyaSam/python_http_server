@@ -26,7 +26,46 @@ class Users(Resource):
         data = json.loads(response.read())
         return {'data':data}, 200
  
+    def post(self):
+        url = "https://jsonplaceholder.typicode.com/users"
+        response = urlopen(url)
+        data = json.loads(response.read())
+        
+        id = request.args.get("name")
+        name = request.args.get("id")
+        username = request.args.get("username")
 
+        new_data = {
+            'id':  id,
+            'name': name,
+            'username': username
+        }
+
+        data.append(new_data)
+        return {'data':data}, 200
+
+# ---------------------------------this did not work-------------------------------------
+
+        # parser = reqparse.RequestParser() 
+        
+        # parser.add_argument('id', required=False)
+        # parser.add_argument('name', required=False)
+        # parser.add_argument('username', required=False)
+        
+        # args = parser.parse_args()  # parse arguments to dictionary
+        
+        # print(args)
+        
+        # new_data = {
+        #     'id': args['id'],
+        #     'name': args['name'],
+        #     'username': args['username']
+        # }
+        # data = data.append(new_data, ignore_index=True)
+        # new_data = json.dumps(new_data)
+        # data.update(new_data)
+        # print(args['id'])
+        # return {'data':data}, 200
 
 
 
