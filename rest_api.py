@@ -14,7 +14,28 @@ app.config['MYSQL_PASSWORD'] = 'Root@1234'
 app.config['MYSQL_DB'] = 'httpServer'
 
 mysql = MySQL(app)
+    
+# -----------------you cannot call a cursor outside of a request function----------------
+#   cursor = mysql.connection.cursor()  
+
+class Users(Resource):
+
+    def get(self):
+        url = "https://jsonplaceholder.typicode.com/users"
+        response = urlopen(url)
+        data = json.loads(response.read())
+        return {'data':data}, 200
  
+
+
+
+
+# --------------------link the classes with the endpoints---------------------------
+
+api.add_resource(Users,'/users')
+
+
+
 # ------------------------run the application----------------------------------
 if __name__ == '__main__':
     app.run()
